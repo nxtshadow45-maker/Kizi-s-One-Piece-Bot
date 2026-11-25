@@ -1,4 +1,4 @@
-import { ChannelType, SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
 import { buildLootPanel } from '../../services/berryLootPosts.js';
 import { isForumPost } from '../../services/berryLootPosts.js';
 
