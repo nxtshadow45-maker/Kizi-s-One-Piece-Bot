@@ -63,9 +63,7 @@ export default {
         item.quantity -= 1;
         if (item.quantity <= 0) chest.items = chest.items.filter(entry => entry.id !== item.id);
       }
-      if (!chest.items.some(entry => entry.quantity > 0)) {
-        post.chests = post.chests.filter(entry => entry.id !== chest.id);
-      }
+      post.chests = post.chests.filter(entry => entry.items?.some(lootItem => lootItem.quantity > 0));
       post.updatedAt = Date.now();
 
       if (await saveLootPostConfig(client, interaction.guildId, loot) === false) {
