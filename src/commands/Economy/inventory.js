@@ -80,6 +80,9 @@ export default {
           return interaction.reply({ content: 'You only have ' + formatCurrency(account.wallet || 0) + '.', ephemeral: true });
         }
         const recipientAccount = await getEconomyData(client, guildId, recipient.id);
+        if (!Number.isSafeInteger((recipientAccount.wallet || 0) + berries)) {
+          return interaction.reply({ content: 'That transfer would exceed the recipient’s safe Berry balance limit.', ephemeral: true });
+        }
         account.wallet -= berries;
         recipientAccount.wallet = (recipientAccount.wallet || 0) + berries;
         const recipientSaved = await setEconomyData(client, guildId, recipient.id, recipientAccount);
@@ -90,7 +93,7 @@ export default {
           await setEconomyData(client, guildId, recipient.id, recipientAccount);
           return interaction.reply({ content: 'The Berry transfer could not be saved. Please try again.', ephemeral: true });
         }
-        return interaction.reply({ content: '<:Berry:1573798988988031087> Sent **' + formatCurrency(berries) + '** to ' + recipient.toString() + '.', ephemeral: true });
+        return interaction.reply({ content: 'Sent **' + formatCurrency(berries) + '** to ' + recipient.toString() + '.', ephemeral: true });
       }
 
       const item = findInventoryEntry(account, itemToken);
