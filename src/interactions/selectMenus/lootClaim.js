@@ -1,6 +1,6 @@
-import { getEconomyData, setEconomyData } from '../../../utils/economy.js';
-import { addInventoryCount } from '../../../services/berryInventory.js';
-import { buildLootPanel, loadLootPost, saveLootPostConfig } from '../../../services/berryLootPosts.js';
+import { getEconomyData, setEconomyData } from '../../utils/economy.js';
+import { addInventoryCount } from '../../services/berryInventory.js';
+import { buildLootPanel, loadLootPost, saveLootPostConfig } from '../../services/berryLootPosts.js';
 
 function inventoryKeyFor(item) {
   const slug = item.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
