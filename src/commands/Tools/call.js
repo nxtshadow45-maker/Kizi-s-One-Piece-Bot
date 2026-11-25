@@ -36,7 +36,9 @@ export default {
     if (selectedDestination.guildId !== interaction.guildId || source.guildId !== interaction.guildId) return interaction.reply({ content: 'The source and destination must be in this server.', ephemeral: true });
     if (!canUseTextChannel(source)) return interaction.reply({ content: 'Choose a text channel, Forum, or thread as the source. Voice channels and categories cannot be relayed.', ephemeral: true });
     if (!canUseTextChannel(selectedDestination)) return interaction.reply({ content: 'Choose a text channel, Forum, or thread as the destination. Voice channels and categories cannot receive relayed text.', ephemeral: true });
-    if (source.id === selectedDestination.id || (source.isThread?.() && source.parentId === selectedDestination.id)
+    const destinationIsChildThread = selectedDestination.isThread?.() && selectedDestination.parentId === source.id;
+    if (source.id === selectedDestination.id || destinationIsChildThread
+      || (source.isThread?.() && source.parentId === selectedDestination.id)
       || (selectedDestination.type === ChannelType.GuildForum && selectedDestination.id === source.parentId)) {
       return interaction.reply({ content: 'Choose a different destination so the relay cannot copy its own posts.', ephemeral: true });
     }
