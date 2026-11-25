@@ -24,6 +24,7 @@ export default {
     }
 
     if (action === 'inventory') {
+      if (!isStaff(interaction)) return interaction.reply({ content: 'Viewing inventories requires the Admin staff role.', ephemeral: true });
       const user = interaction.options.getUser('user') || interaction.user;
       const account = await getEconomyData(client, interaction.guildId, user.id);
       const items = inventoryEntries(account);
