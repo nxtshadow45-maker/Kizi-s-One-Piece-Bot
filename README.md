@@ -316,8 +316,8 @@ For a Forum, the bot creates a departure post for manual travel. It can read lin
 ### Message relay
 
 - A member with the Admin role can use `/call action:start`, choose a member to ping and a destination channel/thread, and optionally choose a source channel, Forum, or thread. Choosing a Forum destination creates a relay thread. If no source is selected, the current channel is used.
-- The relay forwards messages sent by the staff member who configured it. `/call action:stop` removes that member's relays.
-- Duplicate saved relay links are collapsed. If all bot replies still appear twice after updating, make sure the hosting service is running only one copy of the bot.
+- Relays copy messages from bot accounts and webhook characters such as Tupperbox; regular human messages are ignored. `/call action:stop` removes that member's relays.
+- Duplicate relay links and identical bot posts arriving close together are suppressed.
 
 ### Island travel
 
