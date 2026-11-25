@@ -20,7 +20,7 @@ function locationName(channel) {
 export default {
   data: new SlashCommandBuilder()
     .setName('boat')
-    .setDescription('Start or check an island journey.')
+    .setDescription('Start or check a journey between server locations.')
     .addStringOption(option => option.setName('action').setDescription('Journey action').setRequired(true)
       .addChoices({ name: 'Start journey', value: 'start' }, { name: 'Check progress', value: 'status' }, { name: 'Confirm manual departure (staff)', value: 'confirm' }))
     .addStringOption(option => option.setName('boat').setDescription('Choose the ship for this trip').setAutocomplete(true))
