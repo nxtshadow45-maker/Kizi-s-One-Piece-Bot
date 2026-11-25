@@ -1,3 +1,4 @@
+import { escapeMarkdown } from 'discord.js';
 import { getEconomyData, setEconomyData } from '../../utils/economy.js';
 import { addInventoryCount } from '../../services/berryInventory.js';
 import { buildLootPanel, loadLootPost, saveLootPostConfig } from '../../services/berryLootPosts.js';
@@ -57,6 +58,17 @@ export default {
         return interaction.update({ content: 'I could not save your reward, so the chest was left unchanged. Please try again.', components: [] });
       }
 
+      const claim = {
+        username: interaction.user.username,
+        itemName: item.name,
+        kind: item.kind,
+        quantity: item.kind === 'berry' ? item.quantity : 1,
+        claimedAt: Date.now(),
+      };
+      post.claimHistory ||= [];
+      post.claimHistory.push(claim);
+      post.claimHistory = post.claimHistory.slice(-25);
+
       if (item.kind === 'berry') {
         chest.items = chest.items.filter(entry => entry.id !== item.id);
       } else {
@@ -73,12 +85,12 @@ export default {
 
       const updatedPost = loot.posts[threadId];
       const rewardText = item.kind === 'berry'
-        ? '<:Berry:1573798988988031087> ' + item.quantity.toLocaleString() + ' Berries'
-        : '**' + item.name + '**';
+        ? '<:Berry:1573798988988031087> ' + claim.quantity.toLocaleString() + ' Berries'
+        : '**' + escapeMarkdown(item.name) + '**';
       const panel = buildLootPanel(threadId, updatedPost);
       return interaction.update({
         ...panel,
-        content: '🎁 You took ' + rewardText + ' from **' + updatedPost.name + '**.\n' + panel.content
+        content: '🎁 **' + escapeMarkdown(claim.username) + '** claimed ' + rewardText + ' from **' + updatedPost.name + '**.\n' + panel.content
       });
     } finally {
       await client.db.delete(lockKey).catch(() => {});
