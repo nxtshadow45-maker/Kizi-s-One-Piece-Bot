@@ -1,4 +1,4 @@
-import { ChannelType, SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
 import { randomUUID } from 'node:crypto';
 import { cleanName, isStaff, loadLoot, saveConfig } from '../../services/berryRpg.js';
 import { isForumPost } from '../../services/berryLootPosts.js';
