@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { formatCurrency, getEconomyData, setEconomyData } from '../../utils/economy.js';
 import { adjustBerries, berryLabel, isStaff } from '../../services/berryRpg.js';
+import { inventoryEntries } from '../../services/berryInventory.js';
 
 export default {
   data: new SlashCommandBuilder()
