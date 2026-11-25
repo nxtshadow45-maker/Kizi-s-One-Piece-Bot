@@ -287,7 +287,9 @@ Thank you for choosing TitanBot for your Discord server! We're constantly workin
 
 ## Berry Roleplay Systems
 
-The roleplay commands use the server's Berry balance and save their lists and settings in the bot database. Use PostgreSQL in production so the data survives restarts.\n\nStaff-only Berry RPG commands require the `Admin` role (ID `1569520212858904577`). This covers shops, merchant and loot list management, travel settings and confirmation, relay setup, Berry grants, and staff ship grants.
+The roleplay commands use the server's Berry balance and save their lists and settings in the bot database. Use PostgreSQL in production so the data survives restarts.
+
+Staff-only Berry RPG commands require the `Admin` role (ID `1569520212858904577`). This covers shops, merchant and loot list management, travel settings and confirmation, relay setup, Berry grants, and staff ship grants.
 
 ### Berries and ships
 
