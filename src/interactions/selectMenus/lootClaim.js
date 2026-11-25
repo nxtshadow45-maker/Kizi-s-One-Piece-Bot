@@ -1,4 +1,3 @@
-import { escapeMarkdown } from 'discord.js';
 import { getEconomyData, setEconomyData } from '../../utils/economy.js';
 import { addInventoryCount } from '../../services/berryInventory.js';
 import { buildLootPanel, loadLootPost, saveLootPostConfig } from '../../services/berryLootPosts.js';
@@ -84,14 +83,7 @@ export default {
       }
 
       const updatedPost = loot.posts[threadId];
-      const rewardText = item.kind === 'berry'
-        ? '<:Berry:1573798988988031087> ' + claim.quantity.toLocaleString() + ' Berries'
-        : '**' + escapeMarkdown(item.name) + '**';
-      const panel = buildLootPanel(threadId, updatedPost);
-      return interaction.update({
-        ...panel,
-        content: '🎁 **' + escapeMarkdown(claim.username) + '** claimed ' + rewardText + ' from **' + updatedPost.name + '**.\n' + panel.content
-      });
+      return interaction.update(buildLootPanel(threadId, updatedPost));
     } finally {
       await client.db.delete(lockKey).catch(() => {});
     }
