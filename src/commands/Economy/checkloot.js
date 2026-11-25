@@ -21,8 +21,8 @@ export default {
     const action = interaction.options.getString('action');
     if (action === 'inventory') {
       const account = await getEconomyData(client, guildId, userId);
-      const found = Object.entries(account.inventory || {}).filter(([name, count]) => name.startsWith('loot_') && count > 0);
-      const text = found.length ? found.map(([name, count]) => '• ' + name.slice(5).replaceAll('_', ' ') + ' × ' + count).join('\n') : 'Your loot inventory is empty.';
+      const found = inventoryEntries(account);
+      const text = found.length ? found.map(item => '• ' + item.name + ' × ' + item.count).join('\n') : 'Your inventory is empty.';
       return interaction.reply({ content: '🎒 **Loot inventory**\n' + text, ephemeral: true });
     }
 
