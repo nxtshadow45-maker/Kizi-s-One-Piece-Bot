@@ -38,7 +38,7 @@ export default {
       const item = chest?.items?.find(entry => entry.id === itemId && entry.quantity > 0);
       if (!chest || !item) {
         const panel = buildLootPanel(threadId, post);
-        return interaction.update({ ...panel, content: 'That item has already been taken.\\n' + panel.content });
+        return interaction.update({ ...panel, content: 'That item has already been taken.\n' + panel.content });
       }
 
       const account = await getEconomyData(client, interaction.guildId, interaction.user.id);
@@ -78,7 +78,7 @@ export default {
       const panel = buildLootPanel(threadId, updatedPost);
       return interaction.update({
         ...panel,
-        content: '🎁 You took ' + rewardText + ' from **' + updatedPost.name + '**.\\n' + panel.content
+        content: '🎁 You took ' + rewardText + ' from **' + updatedPost.name + '**.\n' + panel.content
       });
     } finally {
       await client.db.delete(lockKey).catch(() => {});
