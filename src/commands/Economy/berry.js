@@ -27,7 +27,9 @@ export default {
       const user = interaction.options.getUser('user') || interaction.user;
       const account = await getEconomyData(client, interaction.guildId, user.id);
       const items = inventoryEntries(account);
-      const text = items.length ? items.map(item => '• ' + item.name + ' × ' + item.count).join('\n') : 'No items yet.';
+      const lines = items.map(item => '• ' + item.name + ' × ' + item.count);
+      if (account.heldItem?.name) lines.push('🗡️ In hand: ' + account.heldItem.name);
+      const text = lines.length ? lines.join('\n') : 'No items yet.';
       return interaction.reply({ content: '🎒 **' + user.username + '’s inventory**\n' + text, ephemeral: true });
     }
 
