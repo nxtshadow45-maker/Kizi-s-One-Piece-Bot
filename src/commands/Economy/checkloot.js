@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { buildLootPanel } from '../../services/berryLootPosts.js';
-import { isForumPost } from '../../services/berryLootPosts.js';
+import { buildLootPanel, isForumPost } from '../../services/berryLootPosts.js';
 
 export default {
   data: new SlashCommandBuilder()
