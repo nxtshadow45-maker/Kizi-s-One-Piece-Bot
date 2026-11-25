@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { ChannelType, SlashCommandBuilder } from 'discord.js';
 import { adjustBerries, cleanName, loadShops, saveConfig } from '../../services/berryRpg.js';
 import { formatCurrency, getEconomyData, setEconomyData } from '../../utils/economy.js';
 
@@ -14,7 +14,7 @@ async function getLinkedChannelText(client, shop) {
   if (channel.isThread?.()) {
     const starter = await channel.fetchStarterMessage().catch(() => null);
     text = starter?.content?.trim() || '';
-  } else if (channel.type === 15) {
+  } else if (channel.type === ChannelType.GuildForum) {
     const active = await channel.threads.fetchActive().catch(() => null);
     const thread = active?.threads?.first();
     const starter = thread ? await thread.fetchStarterMessage().catch(() => null) : null;
