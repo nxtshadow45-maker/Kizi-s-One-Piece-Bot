@@ -131,6 +131,7 @@ export default {
     const quantity = interaction.options.getInteger('quantity') || 1;
 
     if (action === 'setup') {
+      if (stored) return interaction.reply({ content: 'This Forum post already has chest settings. Use Set chest count or edit its contents instead of resetting it.', ephemeral: true });
       if (!chestCount) return interaction.reply({ content: 'Set a chest count from 1 to 20.', ephemeral: true });
       loot.posts[location.id] = { name: postName(location), parentId: location.parentId, chests: Array.from({ length: chestCount }, makeChest), updatedAt: Date.now() };
       await saveConfig(client, 'loot', interaction.guildId, loot);
@@ -138,6 +139,7 @@ export default {
     }
 
     if (action === 'guided') {
+      if (stored) return interaction.reply({ content: 'This Forum post already has chest settings. Use Set chest count or edit its contents instead of replacing it.', ephemeral: true });
       const rarity = interaction.options.getString('rarity');
       if (!chestCount || !rarity) return interaction.reply({ content: 'Choose a rarity and chest count from 1 to 20.', ephemeral: true });
       const table = loot.tables[rarity] || [];
