@@ -6,16 +6,16 @@ export function inventoryLabel(key, metadata = {}) {
   return String(key)
     .replace(/^(loot_|shop_|merchant_)/, '')
     .replace(/_/g, ' ')
-    .replace(/\\s+/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim()
-    .replace(/\\b\\w/g, character => character.toUpperCase()) || 'Unknown item';
+    .replace(/\b\w/g, character => character.toUpperCase()) || 'Unknown item';
 }
 
 export function inventoryEntries(account) {
   const inventory = account?.inventory || {};
   const metadata = account?.inventoryMeta || {};
   return Object.entries(inventory)
-    .filter(([key, count]) => typeof count === 'number' && count > 0)
+    .filter(([, count]) => typeof count === 'number' && count > 0)
     .map(([key, count]) => ({ key, count, name: inventoryLabel(key, metadata) }));
 }
 
