@@ -1,4 +1,4 @@
-import { ActionRowBuilder, SlashCommandBuilder, StringSelectMenuBuilder } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
 import { getEconomyData, setEconomyData, formatCurrency } from '../../utils/economy.js';
 import { inventoryEntries, inventoryToken, findInventoryEntry, removeInventoryCount, addInventoryCount } from '../../services/berryInventory.js';
 import { isStaff } from '../../services/berryRpg.js';
