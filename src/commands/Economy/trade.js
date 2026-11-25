@@ -57,7 +57,7 @@ export default {
       activeOffers.push(offer);
       await saveOffers(client, guildId, activeOffers);
       const itemText = itemName ? ' for **' + itemAmount + ' × ' + itemName + '**' : ' as a Berry gift';
-      return interaction.reply({ content: '📜 Trade offer **' + id + '**: ' + recipient.toString() + ' can accept ' + formatCurrency(berries) + itemText + ' with `/trade action:accept offer_id:' + id + '` or decline it. It expires in 24 hours.', ephemeral: false });
+      return interaction.reply({ content: '📜 Trade offer **' + id + '**: ' + recipient.toString() + ' can accept ' + formatCurrency(berries) + itemText + ' with `/trade accept offer_id:' + id + '` or decline it. It expires in 24 hours.', ephemeral: false });
     }
 
     const id = interaction.options.getString('offer_id');
