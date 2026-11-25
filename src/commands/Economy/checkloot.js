@@ -6,7 +6,7 @@ export default {
   data: new SlashCommandBuilder()
     .setName('checkloot')
     .setDescription('Check a forum post for chests and claim loot.')
-    .addChannelOption(option => option.setName('location').setDescription('Select a Forum post to check')),
+    .addChannelOption(option => option.setName('location').setDescription('Select a Forum post to check').setRequired(true)),
 
   async execute(interaction, config, client) {
     const location = interaction.options.getChannel('location');
