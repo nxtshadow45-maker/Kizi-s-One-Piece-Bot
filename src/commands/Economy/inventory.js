@@ -34,9 +34,9 @@ export default {
       const account = await getEconomyData(client, guildId, user.id);
       const items = inventoryEntries(account);
       const body = items.length
-        ? items.map(item => '• **' + item.name + '** × ' + item.count).join('\\n')
+        ? items.map(item => '• **' + item.name + '** × ' + item.count).join('\n')
         : 'Your inventory is empty.';
-      return interaction.reply({ content: '🎒 **' + user.username + '’s inventory**\\n' + body, ephemeral: true });
+      return interaction.reply({ content: '🎒 **' + user.username + '’s inventory**\n' + body, ephemeral: true });
     }
 
     const account = await getEconomyData(client, guildId, interaction.user.id);
@@ -67,7 +67,7 @@ export default {
     if (!recipientSaved) return interaction.reply({ content: 'I could not save the recipient’s inventory. Nothing was transferred.', ephemeral: true });
     const senderSaved = await setEconomyData(client, guildId, interaction.user.id, account);
     if (!senderSaved) {
-      addInventoryCount(account, item.key, amount, item.name);
+      removeInventoryCount(recipientAccount, item.key, amount);
       await setEconomyData(client, guildId, recipient.id, recipientAccount);
       return interaction.reply({ content: 'The transfer could not be saved. Please try again.', ephemeral: true });
     }
