@@ -359,6 +359,22 @@ export default {
               handler: 'general'
             }, interactionTraceContext));
           }
+        } else if (interaction.isChannelSelectMenu()) {
+          const [customId, ...args] = interaction.customId.split(':');
+          const selectMenu = client.selectMenus.get(customId);
+
+          if (!selectMenu) {
+            return;
+          }
+
+          try {
+            await selectMenu.execute(interaction, client, args);
+          } catch (error) {
+            await handleInteractionError(interaction, error, withTraceContext({
+              type: 'channel_select_menu',
+              customId: interaction.customId
+            }, interactionTraceContext));
+          }
         } else if (interaction.isStringSelectMenu()) {
           const [customId, ...args] = interaction.customId.split(':');
           const selectMenu = client.selectMenus.get(customId);
