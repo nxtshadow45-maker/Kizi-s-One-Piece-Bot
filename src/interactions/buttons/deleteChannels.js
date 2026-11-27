@@ -12,6 +12,7 @@ const DELETABLE_CHANNEL_TYPES = new Set([
   ChannelType.GuildText,
   ChannelType.GuildVoice,
   ChannelType.GuildAnnouncement,
+  ChannelType.GuildCategory,
   ...THREAD_TYPES,
   ChannelType.GuildStageVoice,
   ChannelType.GuildForum,
