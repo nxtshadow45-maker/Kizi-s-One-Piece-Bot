@@ -25,17 +25,27 @@ function selectedChannelIdsFromMessage(message) {
   )];
 }
 
-function ownerCanUse(interaction, ownerId) {
-  return Boolean(
-    interaction.guild
-    && ownerId
-    && interaction.user.id === ownerId
-    && isStaff(interaction),
-  );
+async function ownerCanUse(interaction, ownerId) {
+  if (
+    !interaction.guild
+    || !ownerId
+    || interaction.user.id !== ownerId
+  ) {
+    return false;
+  }
+
+  // Component interactions can carry a partial member object without role data.
+  // Fetch the guild member before deciding the user lacks the Admin role.
+  if (isStaff(interaction)) {
+    return true;
+  }
+
+  const member = await interaction.guild.members.fetch(interaction.user.id).catch(() => null);
+  return Boolean(member && isStaff({ member }));
 }
 
 async function cancelDelete(interaction, ownerId) {
-  if (!ownerCanUse(interaction, ownerId)) {
+  if (!(await ownerCanUse(interaction, ownerId))) {
     return interaction.reply({
       content: 'This delete selection is not available to you.',
       flags: MessageFlags.Ephemeral,
@@ -50,7 +60,7 @@ async function cancelDelete(interaction, ownerId) {
 }
 
 async function confirmDelete(interaction, ownerId) {
-  if (!ownerCanUse(interaction, ownerId)) {
+  if (!(await ownerCanUse(interaction, ownerId))) {
     return interaction.reply({
       content: 'This delete selection is not available to you.',
       flags: MessageFlags.Ephemeral,
