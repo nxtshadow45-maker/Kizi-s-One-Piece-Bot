@@ -63,7 +63,7 @@ export default {
     const selectedIds = [...new Set(interaction.values || [])];
     if (selectedIds.length < 1 || selectedIds.length > MAX_CHANNELS_PER_DELETE) {
       return interaction.reply({
-        content: 'Choose between one and ten different channels or Forum posts.',
+        content: 'Choose between one and ten different channels, categories, or Forum posts.',
         flags: MessageFlags.Ephemeral,
       });
     }
