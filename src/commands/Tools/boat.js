@@ -158,7 +158,11 @@ export default {
       const channel = await client.channels.fetch(cfg.manualChannelId).catch(() => null);
       const request = '📜 Departure request: <@' + interaction.user.id + '> wants to sail aboard **' + boat.name + '** from **' + canonicalFrom + '** to **' + canonicalTo + '**. Sailing log: https://discord.com/channels/' + guildId + '/' + sailingPost.id + '. Staff can confirm with /boat action:confirm user:' + interaction.user.toString() + '.';
       const allowedMentions = { users: [interaction.user.id], parse: [] };
-      if (channel?.type === ChannelType.GuildForum) {
+      if (channel?.type === ChannelType.GuildForum && channel.id === forum.id) {
+        // Keep the departure request inside the voyage post when both use the same Forum.
+        // Creating another Forum thread here makes one voyage appear twice.
+        await sailingPost.send({ content: request, allowedMentions }).catch(() => {});
+      } else if (channel?.type === ChannelType.GuildForum) {
         await channel.threads.create({
           name: ('Departure: ' + interaction.user.username + ' — ' + canonicalFrom + ' to ' + canonicalTo).slice(0, 100),
           message: { content: request, allowedMentions },
