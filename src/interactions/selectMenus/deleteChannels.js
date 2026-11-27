@@ -22,6 +22,25 @@ const DELETABLE_CHANNEL_TYPES = [
   ChannelType.GuildMedia,
 ];
 
+async function ownerCanUse(interaction, ownerId) {
+  if (
+    !interaction.guild
+    || !ownerId
+    || interaction.user.id !== ownerId
+  ) {
+    return false;
+  }
+
+  // Component interactions can carry a partial member object without role data.
+  // Fetch the guild member before deciding the user lacks the Admin role.
+  if (isStaff(interaction)) {
+    return true;
+  }
+
+  const member = await interaction.guild.members.fetch(interaction.user.id).catch(() => null);
+  return Boolean(member && isStaff({ member }));
+}
+
 function buildComponents(ownerId, selectedIds) {
   const selector = new ChannelSelectMenuBuilder()
     .setCustomId('delete_channels_select:' + ownerId)
@@ -53,7 +72,7 @@ export default {
   name: 'delete_channels_select',
 
   async execute(interaction, _client, [ownerId]) {
-    if (!interaction.guild || !ownerId || interaction.user.id !== ownerId || !isStaff(interaction)) {
+    if (!(await ownerCanUse(interaction, ownerId))) {
       return interaction.reply({
         content: 'This delete selection is not available to you.',
         flags: MessageFlags.Ephemeral,
