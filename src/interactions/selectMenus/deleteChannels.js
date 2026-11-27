@@ -69,11 +69,7 @@ export default {
     }
 
     const selectedChannels = interaction.channels;
-    const list = selectedIds.map(id => {
-      const channel = selectedChannels.get(id);
-      const label = channel?.name ? ' — ' + channel.name : '';
-      return '• <#' + id + '>' + label;
-    });
+    const list = selectedIds.map(id => '• <#' + id + '>');
 
     return interaction.update({
       content: '**Review before deleting** (' + selectedIds.length + '/' + MAX_CHANNELS_PER_DELETE + ' selected)\n' +
