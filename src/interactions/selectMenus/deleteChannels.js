@@ -68,7 +68,6 @@ export default {
       });
     }
 
-    const selectedChannels = interaction.channels;
     const list = selectedIds.map(id => '• <#' + id + '>');
 
     return interaction.update({
