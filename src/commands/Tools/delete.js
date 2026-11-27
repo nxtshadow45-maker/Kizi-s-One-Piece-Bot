@@ -51,7 +51,7 @@ export default {
       .addChannelTypes(...DELETABLE_CHANNEL_TYPES);
 
     return interaction.reply({
-      content: 'Use the picker below to choose up to **10** different channels or Forum posts. Review your selection, then confirm deletion. Deleting a category leaves its child channels in the server without a category.',
+      content: 'Use the picker below to choose up to **10** different channels, categories, or Forum posts. Review your selection, then confirm deletion. Deleting a category leaves its child channels in the server without a category.',
       components: [new ActionRowBuilder().addComponents(selector)],
       flags: MessageFlags.Ephemeral,
       allowedMentions: { parse: [] },
