@@ -21,12 +21,12 @@ const DELETABLE_CHANNEL_TYPES = [
   ChannelType.GuildForum,
   ChannelType.GuildMedia,
 ];
-const MAX_CHANNELS_PER_DELETE = 5;
+const MAX_CHANNELS_PER_DELETE = 10;
 
 export default {
   data: new SlashCommandBuilder()
     .setName('kizidelete')
-    .setDescription('Select and delete up to five channels or Forum posts.'),
+    .setDescription('Select up to ten channels or Forum posts to review and delete.'),
 
   async execute(interaction) {
     if (!isStaff(interaction)) {
@@ -45,13 +45,13 @@ export default {
 
     const selector = new ChannelSelectMenuBuilder()
       .setCustomId('delete_channels_select:' + interaction.user.id)
-      .setPlaceholder('Choose up to 5 channels, categories, or Forum posts')
+      .setPlaceholder('Choose up to 10 items')
       .setMinValues(1)
       .setMaxValues(MAX_CHANNELS_PER_DELETE)
       .addChannelTypes(...DELETABLE_CHANNEL_TYPES);
 
     return interaction.reply({
-      content: 'Select up to **5** channels, categories, or Forum posts. Review the list before confirming. Deleting a category leaves its child channels in the server without a category.',
+      content: 'Use the picker below to choose up to **10** different channels, categories, or Forum posts. Review your selection, then confirm deletion. Deleting a category leaves its child channels in the server without a category.',
       components: [new ActionRowBuilder().addComponents(selector)],
       flags: MessageFlags.Ephemeral,
       allowedMentions: { parse: [] },
