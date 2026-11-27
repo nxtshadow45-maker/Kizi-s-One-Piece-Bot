@@ -3,14 +3,17 @@ import { isStaff } from '../../services/berryRpg.js';
 import { InteractionHelper } from '../../utils/interactionHelper.js';
 
 const MAX_CHANNELS_PER_DELETE = 5;
+const THREAD_TYPES = new Set([
+  ChannelType.AnnouncementThread,
+  ChannelType.PublicThread,
+  ChannelType.PrivateThread,
+]);
 const DELETABLE_CHANNEL_TYPES = new Set([
   ChannelType.GuildText,
   ChannelType.GuildVoice,
   ChannelType.GuildAnnouncement,
   ChannelType.GuildCategory,
-  ChannelType.AnnouncementThread,
-  ChannelType.PublicThread,
-  ChannelType.PrivateThread,
+  ...THREAD_TYPES,
   ChannelType.GuildStageVoice,
   ChannelType.GuildForum,
   ChannelType.GuildMedia,
@@ -105,13 +108,7 @@ export default {
     }
 
     const targets = [...selectedChannels].sort(
-      (left, right) => Number(DELETABLE_CHANNEL_TYPES.has(right.type) && (
-        right.isThread?.() || right.type === ChannelType.AnnouncementThread
-        || right.type === ChannelType.PublicThread || right.type === ChannelType.PrivateThread
-      )) - Number(DELETABLE_CHANNEL_TYPES.has(left.type) && (
-        left.isThread?.() || left.type === ChannelType.AnnouncementThread
-        || left.type === ChannelType.PublicThread || left.type === ChannelType.PrivateThread
-      )),
+      (left, right) => Number(THREAD_TYPES.has(right.type)) - Number(THREAD_TYPES.has(left.type)),
     );
     const deleted = [];
     const failures = [];
