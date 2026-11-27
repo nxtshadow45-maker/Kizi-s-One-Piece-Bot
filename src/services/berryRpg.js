@@ -44,7 +44,7 @@ export async function loadJourneyConfig(client, guildId) {
   return config;
 }
 
-const ADMIN_ROLE_ID = '1569520212858904577';
+const ADMIN_ROLE_ID = '1569144564135235704';
 
 export function isStaff(interaction) {
   const roles = interaction.member?.roles;
