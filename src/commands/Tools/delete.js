@@ -25,11 +25,8 @@ const MAX_CHANNELS_PER_DELETE = 5;
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('delete')
-    .setDescription('Delete selected server channels or Forum posts.')
-    .addSubcommand(sub => sub
-      .setName('channels')
-      .setDescription('Choose up to five channels or Forum posts to delete.')),
+    .setName('kizidelete')
+    .setDescription('Select and delete up to five channels or Forum posts.'),
 
   async execute(interaction) {
     if (!isStaff(interaction)) {

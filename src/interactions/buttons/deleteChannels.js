@@ -60,7 +60,7 @@ async function confirmDelete(interaction, ownerId) {
   const selectedIds = selectedChannelIdsFromMessage(interaction.message);
   if (selectedIds.length < 1 || selectedIds.length > MAX_CHANNELS_PER_DELETE) {
     return interaction.update({
-      content: 'The selection expired or was invalid. Run /delete channels again.',
+      content: 'The selection expired or was invalid. Run /kizidelete again.',
       components: [],
       allowedMentions: { parse: [] },
     });
@@ -100,7 +100,7 @@ async function confirmDelete(interaction, ownerId) {
   const deleted = [];
   for (const channel of targets) {
     try {
-      await channel.delete('Deleted by ' + interaction.user.tag + ' using /delete channels');
+      await channel.delete('Deleted by ' + interaction.user.tag + ' using /kizidelete');
       deleted.push(channel.name || channel.id);
     } catch {
       failures.push(channel.name || channel.id);
