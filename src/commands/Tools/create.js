@@ -212,9 +212,9 @@ export default {
       }
 
       await replyEphemeral(interaction, lines.join('\n') || 'No Forums were created.');
-    } catch (error) {
+    } catch {
       await replyEphemeral(interaction, 'Forum creation could not be completed. Please check the bot’s channel permissions and try again.');
-      throw error;
+      return;
     } finally {
       lockKeys.forEach(key => activeForumCreationKeys.delete(key));
       activeForumCreationInteractions.delete(interaction.id);
