@@ -10,6 +10,7 @@ import { isStaff } from '../../services/berryRpg.js';
 import { MAX_CHANNELS_PER_DELETE } from '../../commands/Tools/delete.js';
 
 const DELETABLE_CHANNEL_TYPES = [
+  ChannelType.GuildCategory,
   ChannelType.GuildText,
   ChannelType.GuildVoice,
   ChannelType.GuildAnnouncement,
@@ -24,7 +25,7 @@ const DELETABLE_CHANNEL_TYPES = [
 function buildComponents(ownerId, selectedIds) {
   const selector = new ChannelSelectMenuBuilder()
     .setCustomId('delete_channels_select:' + ownerId)
-    .setPlaceholder('Update selected channels or Forum posts')
+    .setPlaceholder('Update selected channels, categories, or Forum posts')
     .setMinValues(1)
     .setMaxValues(MAX_CHANNELS_PER_DELETE)
     .addChannelTypes(...DELETABLE_CHANNEL_TYPES);
@@ -62,7 +63,7 @@ export default {
     const selectedIds = [...new Set(interaction.values || [])];
     if (selectedIds.length < 1 || selectedIds.length > MAX_CHANNELS_PER_DELETE) {
       return interaction.reply({
-        content: 'Choose between one and sixteen channels or Forum posts.',
+        content: 'Choose between one and sixteen channels, categories, or Forum posts.',
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -76,7 +77,7 @@ export default {
 
     return interaction.update({
       content: '**Review before deleting** (' + selectedIds.length + '/' + MAX_CHANNELS_PER_DELETE + ' selected)\n' +
-        'This permanently deletes each selected channel or Forum post and its contents:\n' +
+        'This permanently deletes each selected channel or Forum post and its contents. Deleting a category leaves its child channels in the server without a category:\n' +
         list.join('\n'),
       components: buildComponents(ownerId, selectedIds),
       allowedMentions: { parse: [] },
