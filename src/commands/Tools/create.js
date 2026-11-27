@@ -151,22 +151,24 @@ export default {
       }
 
       const failed = [];
+      const createdChannelIds = new Set();
       for (const name of names) {
         try {
-          await interaction.guild.channels.create({
+          const createdChannel = await interaction.guild.channels.create({
             name,
             type: ChannelType.GuildForum,
             parent: category.id,
             reason: 'Created by ' + interaction.user.tag + ' using /create forum (interaction ' + interaction.id + ')',
           });
+          createdChannelIds.add(createdChannel.id);
         } catch {
           failed.push(name);
         }
       }
 
       // Different bot instances cannot share the in-memory lock. Reconcile the
-      // requested names after creating, removing only extra matching Forums whose
-      // channel IDs were absent before this request began.
+      // requested names after creating. Delete only extra matching Forums that
+      // this execution successfully created, never a pre-existing or unrelated channel.
       let finalChannels = await interaction.guild.channels.fetch();
       for (let pass = 0; pass < 3; pass += 1) {
         const forumsByName = getRequestedForums(finalChannels, category.id, normalizedNames, initialChannelIds);
@@ -176,7 +178,8 @@ export default {
             .sort((left, right) =>
               left.createdTimestamp - right.createdTimestamp || left.id.localeCompare(right.id)
             )
-            .slice(1));
+            .slice(1)
+            .filter(channel => createdChannelIds.has(channel.id)));
 
         if (!duplicates.length) {
           break;
