@@ -10,6 +10,7 @@ import {
 import { isStaff } from '../../services/berryRpg.js';
 
 const DELETABLE_CHANNEL_TYPES = [
+  ChannelType.GuildCategory,
   ChannelType.GuildText,
   ChannelType.GuildVoice,
   ChannelType.GuildAnnouncement,
@@ -47,13 +48,13 @@ export default {
 
     const selector = new ChannelSelectMenuBuilder()
       .setCustomId('delete_channels_select:' + interaction.user.id)
-      .setPlaceholder('Choose up to 16 channels or Forum posts')
+      .setPlaceholder('Choose up to 16 channels, categories, or Forum posts')
       .setMinValues(1)
       .setMaxValues(MAX_CHANNELS_PER_DELETE)
       .addChannelTypes(...DELETABLE_CHANNEL_TYPES);
 
     return interaction.reply({
-      content: 'Select up to **16** channels or Forum posts. Review your list, then confirm to permanently delete them and their contents.',
+      content: 'Select up to **16** channels, categories, or Forum posts. Review the list before confirming. Deleting a category leaves its child channels in the server without a category.',
       components: [new ActionRowBuilder().addComponents(selector)],
       flags: MessageFlags.Ephemeral,
       allowedMentions: { parse: [] },
