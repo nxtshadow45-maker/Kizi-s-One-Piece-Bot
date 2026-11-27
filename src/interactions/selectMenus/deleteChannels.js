@@ -25,7 +25,7 @@ const DELETABLE_CHANNEL_TYPES = [
 function buildComponents(ownerId, selectedIds) {
   const selector = new ChannelSelectMenuBuilder()
     .setCustomId('delete_channels_select:' + ownerId)
-    .setPlaceholder('Update selected channels, categories, or Forum posts')
+    .setPlaceholder('Update the selected items')
     .setMinValues(1)
     .setMaxValues(MAX_CHANNELS_PER_DELETE)
     .addChannelTypes(...DELETABLE_CHANNEL_TYPES);
@@ -63,7 +63,7 @@ export default {
     const selectedIds = [...new Set(interaction.values || [])];
     if (selectedIds.length < 1 || selectedIds.length > MAX_CHANNELS_PER_DELETE) {
       return interaction.reply({
-        content: 'Choose between one and five channels, categories, or Forum posts.',
+        content: 'Choose between one and ten different channels or Forum posts.',
         flags: MessageFlags.Ephemeral,
       });
     }
