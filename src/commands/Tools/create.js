@@ -52,13 +52,13 @@ export default {
   data: new SlashCommandBuilder()
     .setName('create')
     .setDescription('Create server resources.')
-    .addSubcommand(sub => sub.setName('forum').setDescription('Create up to sixteen Forums in a server category.')
+    .addSubcommand(sub => sub.setName('forum').setDescription('Create up to five Forums in a server category.')
       .addChannelOption(option => option.setName('category')
         .setDescription('Category where the new Forums will be placed')
         .addChannelTypes(ChannelType.GuildCategory)
         .setRequired(true))
       .addStringOption(option => option.setName('names')
-        .setDescription('Enter 1–16 Forum names, separated by commas or new lines')
+        .setDescription('Enter 1–5 Forum names, separated by commas or new lines')
         .setMaxLength(2000)
         .setRequired(true))),
 
@@ -80,9 +80,9 @@ export default {
 
     const rawNames = interaction.options.getString('names') || '';
     const names = rawNames.split(/[,\n]/).map(name => name.trim()).filter(Boolean);
-    if (names.length < 1 || names.length > 16) {
+    if (names.length < 1 || names.length > 5) {
       return interaction.reply({
-        content: 'Enter between one and sixteen Forum names, separated by commas or new lines.',
+        content: 'Enter between one and five Forum names, separated by commas or new lines.',
         flags: MessageFlags.Ephemeral,
       });
     }
